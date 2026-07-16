@@ -1,6 +1,7 @@
 services:
     laravel-service:
         container_name: laravel-container
+        #command: php artisan serve --host=0.0.0.0 --port=8000
         build:
             context: .
             dockerfile: docker/laravel/Dockerfile
@@ -13,7 +14,7 @@ services:
             - "8000:8000"
         depends_on:
             - mysql-service
-        command: [ "bash", "/usr/local/bin/entrypoint.development.sh" ]
+        command: ["bash", "/usr/local/bin/entrypoint.development.sh"]
 
     vuejs-service:
         container_name: vuejs-container
@@ -28,7 +29,7 @@ services:
             - "5173:5173"
         depends_on:
             - laravel-service
-        command: [ "sh", "/usr/local/bin/entrypoint.development.sh" ]
+        command: ["sh", "/usr/local/bin/entrypoint.development.sh"]
 
     mysql-service:
         image: mysql:8.0

@@ -1,0 +1,7 @@
+# Use this workspace to collaborate
+workspace:
+  id: 1b9afa56-8ab2-4dda-8c2a-81ea6a993196
+
+localResources:
+  specs:
+    - ../laravel-app/vendor/roadrunner-php/roadrunner-api-dto/proto/dependencies/gogoproto/gogo.proto

@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => AdminMiddleware::class,
         ]);
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
-        //
-    })->create();
+    ->withExceptions(function (Exceptions $exceptions) {
+    $exceptions->render(function (\Symfony\Component\Routing\Exception\RouteNotFoundException $e, $request) {
+        if ($request->is('api/*') || $request->expectsJson()) {
+            return response()->json(['message' => 'Unauthenticated.'], 401);
+        }
+    });
+})->create();

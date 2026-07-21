@@ -1,5 +1,5 @@
 <template>
-  <div class="content-wrapper" style="min-height: 1175px;">
+  <div class="content-wrapper" style="min-height: 1175px">
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -16,9 +16,7 @@
       </div>
     </div>
     <div class="content">
-      <div class="container-fluid">
-
-      </div>
+      <div class="container-fluid"></div>
     </div>
   </div>
 </template>

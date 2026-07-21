@@ -1,16 +1,15 @@
-import Profile from '@/components/auth/Profile.vue';
-import ResetPassword from '@/components/auth/ResetPassword.vue';
-import SetNewPassword from '@/components/auth/SetNewPassword.vue';
-import Signin from '@/components/auth/Signin.vue';
-import Signout from '@/components/auth/Signout.vue';
-import Signup from '@/components/auth/Signup.vue';
-import VerifyEmail from '@/components/auth/VerifyEmail.vue';
-import GoogleOAuth from '@/components/google-oauth/GoogleOAuth.vue';
-import Dashboard from '@/components/pages/Dashboard.vue';
-import User from '@/components/pages/User.vue';
-import Backup from '@/components/pages/Backup.vue';
-import { createRouter, createWebHistory } from 'vue-router';
-
+import Profile from "@/components/auth/Profile.vue";
+import ResetPassword from "@/components/auth/ResetPassword.vue";
+import SetNewPassword from "@/components/auth/SetNewPassword.vue";
+import Signin from "@/components/auth/Signin.vue";
+import Signout from "@/components/auth/Signout.vue";
+import Signup from "@/components/auth/Signup.vue";
+import VerifyEmail from "@/components/auth/VerifyEmail.vue";
+import GoogleOAuth from "@/components/google-oauth/GoogleOAuth.vue";
+import Dashboard from "@/components/pages/Dashboard.vue";
+import User from "@/components/pages/User.vue";
+import Backup from "@/components/pages/Backup.vue";
+import { createRouter, createWebHistory } from "vue-router";
 
 import Navbar from "@/components/includes/Navbar.vue";
 import LeftSidebar from "@/components/includes/LeftSidebar.vue";
@@ -21,51 +20,51 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'auth.signin',
+      path: "/",
+      name: "auth.signin",
       component: Signin,
       meta: { guarded: false },
     },
     {
-      path: '/signout',
-      name: 'auth.signout',
+      path: "/signout",
+      name: "auth.signout",
       component: Signout,
       // This route has no guarded meta because it use for both authenticated and unauthenticated users.
       // The authentication state will be handled in the Signout component.
     },
     {
-      path: '/signup',
-      name: 'auth.signup',
+      path: "/signup",
+      name: "auth.signup",
       component: Signup,
       meta: { guarded: false },
     },
     {
-      path: '/verify/email',
-      name: 'auth.verify.email',
+      path: "/verify/email",
+      name: "auth.verify.email",
       component: VerifyEmail,
       meta: { guarded: false },
     },
     {
-      path: '/reset-password',
-      name: 'auth.reset-password',
+      path: "/reset-password",
+      name: "auth.reset-password",
       component: ResetPassword,
       meta: { guarded: false },
     },
     {
-      path: '/set-new-password',
-      name: 'auth.set-new-password',
+      path: "/set-new-password",
+      name: "auth.set-new-password",
       component: SetNewPassword,
       meta: { guarded: false },
     },
     {
-      path: '/google/oauth/callback',
-      name: 'auth.google.oauth.callback',
+      path: "/google/oauth/callback",
+      name: "auth.google.oauth.callback",
       component: GoogleOAuth,
       meta: { guarded: false },
     },
     {
-      path: '/dashboard',
-      name: 'dashboard',
+      path: "/dashboard",
+      name: "dashboard",
       components: {
         default: Dashboard,
         navbar: Navbar,
@@ -76,8 +75,8 @@ const router = createRouter({
       meta: { guarded: true },
     },
     {
-      path: '/profile',
-      name: 'profile',
+      path: "/profile",
+      name: "profile",
       components: {
         default: Profile,
         navbar: Navbar,
@@ -88,8 +87,8 @@ const router = createRouter({
       meta: { guarded: true },
     },
     {
-      path: '/users',
-      name: 'users',
+      path: "/users",
+      name: "users",
       components: {
         default: User,
         navbar: Navbar,
@@ -100,8 +99,8 @@ const router = createRouter({
       meta: { guarded: true },
     },
     {
-      path: '/backups',
-      name: 'backups',
+      path: "/backups",
+      name: "backups",
       components: {
         default: Backup,
         navbar: Navbar,
@@ -112,10 +111,10 @@ const router = createRouter({
       meta: { guarded: true },
     },
     {
-      path: '/:pathMatch(.*)*',
-      redirect: '/dashboard',
-    }
+      path: "/:pathMatch(.*)*",
+      redirect: "/dashboard",
+    },
   ],
-})
+});
 
-export default router
+export default router;

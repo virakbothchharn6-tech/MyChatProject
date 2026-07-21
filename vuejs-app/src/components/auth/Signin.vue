@@ -1,5 +1,13 @@
 <template>
   <div class="login-page">
+    <video
+      class="bg-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      :src="bgVideoSrc"
+    ></video>
     <div class="login-box">
       <div class="card card-outline card-primary">
         <div class="card-header text-center">
@@ -9,8 +17,13 @@
           <p class="login-box-msg">Sign in to start your session</p>
           <form @submit.prevent="signIn">
             <div class="input-group mb-3">
-              <input type="email" v-model="user.email" class="form-control" placeholder="Email"
-                :class="{ 'is-invalid': !!userError.email }" />
+              <input
+                type="email"
+                v-model="user.email"
+                class="form-control"
+                placeholder="Email"
+                :class="{ 'is-invalid': !!userError.email }"
+              />
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
@@ -21,8 +34,14 @@
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="password" v-model="user.password" class="form-control" placeholder="Password" autocomplete
-                :class="{ 'is-invalid': !!userError.password }" />
+              <input
+                type="password"
+                v-model="user.password"
+                class="form-control"
+                placeholder="Password"
+                autocomplete
+                :class="{ 'is-invalid': !!userError.password }"
+              />
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-lock"></span>
@@ -35,7 +54,9 @@
             <div class="row">
               <div class="col-8"></div>
               <div class="col-4">
-                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                <button type="submit" class="btn btn-primary btn-block">
+                  Sign In
+                </button>
               </div>
             </div>
           </form>
@@ -44,12 +65,27 @@
             <button @click="googleSignIn()" class="btn btn-block btn-danger">
               <i class="fab fa-google mr-2"></i> Sign in with Google
             </button>
+            <button @click="tiktokSignIn()" class="btn btn-block btn-dark mt-2">
+              <i class="fab fa-tiktok mr-2"></i> Sign in with TikTok
+            </button>
+            <button
+              @click="phoneSignIn()"
+              class="btn btn-block btn-primary mt-2"
+            >
+              <i class="fas fa-phone mr-2"></i> Sign in with Phone Number
+            </button>
           </div>
           <p class="mb-1">
-            <router-link :to="{ name: 'auth.signup' }" class="text-center">Register a new membership</router-link>
+            <router-link :to="{ name: 'auth.signup' }" class="text-center"
+              >Register a new membership</router-link
+            >
           </p>
           <p class="mb-0">
-            <router-link :to="{ name: 'auth.reset-password' }" class="text-center">Forgot your password?</router-link>
+            <router-link
+              :to="{ name: 'auth.reset-password' }"
+              class="text-center"
+              >Forgot your password?</router-link
+            >
           </p>
         </div>
       </div>
@@ -67,6 +103,8 @@ import { apiGoogleOAuthRedirect } from "@/functions/api/google-oauth";
 
 const router = useRouter();
 const userStore = useUserStore();
+
+const bgVideoSrc = "/big-video.mp4";
 
 const user = reactive({
   email: "",
@@ -88,7 +126,7 @@ function resetAllState() {
 
 async function signIn() {
   try {
-    LoadingModal('Signing In...');
+    LoadingModal("Signing In...");
     const response = await apiSignIn(user);
     const { data } = response;
     userStore.setState(data.user);
@@ -99,14 +137,16 @@ async function signIn() {
   } catch (error) {
     const { response } = error;
     if (!response) {
-      return MessageModal({ icon: "error", title: "Error", text: error.message });
+      return MessageModal({
+        icon: "error",
+        title: "Error",
+        text: error.message,
+      });
     }
     const { status, data } = response;
     if (status === 422) {
       Object.keys(userError).forEach((key) => {
-        userError[key] = data.errors[key]
-          ? data.errors[key][0]
-          : "";
+        userError[key] = data.errors[key] ? data.errors[key][0] : "";
       });
       return CloseModal();
     }
@@ -120,7 +160,45 @@ const googleSignIn = async () => {
     const response = await apiGoogleOAuthRedirect();
     window.location.href = response.data.redirect_url;
   } catch (error) {
-    return MessageModal({ icon: "error", title: "Error", text: error.message || error.response.data.message });
+    return MessageModal({
+      icon: "error",
+      title: "Error",
+      text: error.message || error.response.data.message,
+    });
   }
 };
+
+const tiktokSignIn = async () => {
+  // ត្រូវបំពេញ logic TikTok OAuth នៅទីនេះនៅពេលក្រោយ
+  console.log("TikTok sign in clicked");
+};
+
+const phoneSignIn = async () => {
+  // ត្រូវបំពេញ logic Phone Number sign in នៅទីនេះនៅពេលក្រោយ
+  console.log("Phone sign in clicked");
+};
 </script>
+
+<style scoped>
+.login-page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: transparent;
+}
+
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.login-box {
+  position: relative;
+  z-index: 1;
+}
+</style>

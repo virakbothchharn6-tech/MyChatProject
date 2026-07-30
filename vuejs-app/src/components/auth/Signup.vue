@@ -234,12 +234,10 @@ const googleSignUp = async () => {
 };
 
 const tiktokSignUp = async () => {
-  // ត្រូវបំពេញ logic TikTok OAuth នៅទីនេះនៅពេលក្រោយ
   console.log("TikTok sign up clicked");
 };
 
 const phoneSignUp = async () => {
-  // ត្រូវបំពេញ logic Phone Number sign up នៅទីនេះនៅពេលក្រោយ
   console.log("Phone sign up clicked");
 };
 </script>

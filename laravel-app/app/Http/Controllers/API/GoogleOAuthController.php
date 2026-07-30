@@ -29,6 +29,7 @@ class GoogleOAuthController extends Controller
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Google OAuth failed: ' . $e->getMessage());
             return redirect($callback_url . '?error=google_oauth_failed');
         }
 

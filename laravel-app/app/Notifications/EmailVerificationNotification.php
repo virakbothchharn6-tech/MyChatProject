@@ -7,9 +7,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use URL;
+use Illuminate\Support\Facades\URL;
 
-class EmailVerificationNotification extends Notification implements ShouldQueue
+class EmailVerificationNotification extends Notification
 {
     use Queueable;
 
@@ -48,7 +48,7 @@ class EmailVerificationNotification extends Notification implements ShouldQueue
             ->line('This verification link will expire in 5 minutes.');
     }
 
-    protected function verificationURL($notifiable)
+    protected function verificationURL(object $notifiable)
     {
         return URL::temporarySignedRoute(
             'verify.email',

@@ -15,7 +15,10 @@ Route::get('/verify/email/{id}/{hash}', [AuthController::class, 'verifyEmail'])
 Route::post('/send/verification-email', [AuthController::class, 'sendVerificationEmail']);
 Route::post('/send/reset-password-email', [AuthController::class, 'sendResetPasswordEmail']);
 Route::post('/set/new-password', [AuthController::class, 'setNewPassword'])->name('set.new-password');
-
+Route::get('/verify/email/{id}/{hash}', [AuthController::class, 'verifyEmail'])
+    ->middleware('signed')
+    ->name('verify.email');
+Route::post('/send/verification-email', [AuthController::class, 'sendVerificationEmail']);
 Route::prefix('google')->group(function () {
     Route::get('/oauth/redirect', [GoogleOAuthController::class, 'googleOAuthRedirect']);
     Route::get('/oauth/callback', [GoogleOAuthController::class, 'googleOAuthCallback']);

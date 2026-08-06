@@ -6,11 +6,18 @@
           <router-link to="/" class="h1"><b>Admin</b>LTE</router-link>
         </div>
         <div class="card-body">
-          <p class="login-box-msg">Enter your email to receive a password reset link</p>
+          <p class="login-box-msg">
+            Enter your email to receive a password reset link
+          </p>
           <form @submit.prevent="sendResetPasswordEmail">
             <div class="input-group mb-3">
-              <input v-model="user.email" :class="{ 'is-invalid': !!userError.email }" type="email" class="form-control"
-                placeholder="Email" />
+              <input
+                v-model="user.email"
+                :class="{ 'is-invalid': !!userError.email }"
+                type="email"
+                class="form-control"
+                placeholder="Email"
+              />
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
@@ -23,16 +30,22 @@
             <div class="row">
               <div class="col-8"></div>
               <div class="col-4">
-                <button type="submit" class="btn btn-primary btn-block">Send Link</button>
+                <button type="submit" class="btn btn-primary btn-block">
+                  Send Link
+                </button>
               </div>
             </div>
           </form>
 
           <p class="mb-1">
-            <router-link :to="{ name: 'auth.signin' }" class="text-center">Go back to login</router-link>
+            <router-link :to="{ name: 'auth.signin' }" class="text-center"
+              >Go back to login</router-link
+            >
           </p>
           <p class="mb-0">
-            <router-link :to="{ name: 'auth.signup' }" class="text-center">Register a new membership</router-link>
+            <router-link :to="{ name: 'auth.signup' }" class="text-center"
+              >Register a new membership</router-link
+            >
           </p>
         </div>
       </div>
@@ -65,18 +78,24 @@ async function sendResetPasswordEmail() {
     LoadingModal();
     const response = await apiSendResetPasswordEmail(user.email);
     resetAllState();
-    return MessageModal({ icon: "success", title: "Success", text: response.data.message });
+    return MessageModal({
+      icon: "success",
+      title: "Success",
+      text: response.data.message,
+    });
   } catch (error) {
     const { response } = error;
     if (!response) {
-      return MessageModal({ icon: "error", title: "Error", text: error.message });
+      return MessageModal({
+        icon: "error",
+        title: "Error",
+        text: error.message,
+      });
     }
     const { status, data } = response;
     if (status === 422) {
       Object.keys(userError).forEach((key) => {
-        userError[key] = data.errors[key]
-          ? data.errors[key][0]
-          : "";
+        userError[key] = data.errors[key] ? data.errors[key][0] : "";
       });
       return CloseModal();
     }

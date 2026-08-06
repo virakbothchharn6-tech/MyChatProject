@@ -169,12 +169,12 @@ const googleSignIn = async () => {
 };
 
 const tiktokSignIn = async () => {
-  // ត្រូវបំពេញ logic TikTok OAuth នៅទីនេះនៅពេលក្រោយ
+  //
   console.log("TikTok sign in clicked");
 };
 
 const phoneSignIn = async () => {
-  // ត្រូវបំពេញ logic Phone Number sign in នៅទីនេះនៅពេលក្រោយ
+  //
   console.log("Phone sign in clicked");
 };
 </script>

@@ -7,7 +7,7 @@
     <LeftSidebar />
 
     <!-- Content Wrapper -->
-    <div class="content-wrapper" style="min-height: 1175px">
+    <div class="content-wrapper">
       <div class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
@@ -34,8 +34,9 @@
                   <div class="text-center">
                     <img
                       class="profile-user-img img-fluid img-circle"
-                      :src="emptyImage"
+                      :src="userStore.avatar || emptyImage"
                       alt="User profile picture"
+                      style="width: 100px; height: 100px; object-fit: cover"
                     />
                   </div>
                   <h3 class="profile-username text-center">
@@ -69,31 +70,13 @@
                 <div class="card-body">
                   <strong><i class="fas fa-book mr-1"></i> Education</strong>
                   <p class="text-muted">
-                    B.S. in Computer Science from the University of Tennessee at
-                    Knoxville
+                    National Polytechnic Institute of Cambodia (NPIC)
                   </p>
                   <hr />
-
-                  <strong
-                    ><i class="fas fa-map-marker-alt mr-1"></i> Location</strong
-                  >
-                  <p class="text-muted">Malibu, California</p>
-                  <hr />
-
-                  <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
-                  <p class="text-muted">
-                    <span class="badge badge-danger mr-1">UI Design</span>
-                    <span class="badge badge-success mr-1">Coding</span>
-                    <span class="badge badge-info mr-1">Javascript</span>
-                    <span class="badge badge-warning mr-1">PHP</span>
-                    <span class="badge badge-primary">Node.js</span>
-                  </p>
-                  <hr />
-
-                  <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
-                  <p class="text-muted">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
+                  <strong>
+                    <i class="fas fa-map-marker-alt mr-1"></i> Location
+                  </strong>
+                  <p class="text-muted">Phnom Penh, Cambodia</p>
                 </div>
               </div>
             </div>
@@ -118,7 +101,7 @@
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#settings" data-toggle="tab"
-                        >Settings</a
+                        >Settings (Update Profile)</a
                       >
                     </li>
                   </ul>
@@ -152,7 +135,6 @@
                           filler text for everyone from bacon lovers to Charlie
                           Sheen fans.
                         </p>
-
                         <p>
                           <a href="#" class="link-black text-sm mr-2"
                             ><i class="fas fa-share mr-1"></i> Share</a
@@ -166,7 +148,6 @@
                             </a>
                           </span>
                         </p>
-
                         <input
                           class="form-control form-control-sm"
                           type="text"
@@ -174,7 +155,7 @@
                         />
                       </div>
 
-                      <!-- Post 2 -->
+                      <!-- Post 2 with Red Send Button -->
                       <div class="post clearfix">
                         <div class="user-block">
                           <img
@@ -197,7 +178,6 @@
                           designers, typographers and the like. Some people hate
                           it and argue for its demise.
                         </p>
-
                         <form class="form-horizontal">
                           <div class="input-group input-group-sm mb-0">
                             <input
@@ -219,9 +199,56 @@
                       <p class="text-muted">Timeline content goes here...</p>
                     </div>
 
-                    <!-- Settings Tab -->
+                    <!-- Settings Tab (For Updating Profile & Avatar Upload) -->
                     <div class="tab-pane" id="settings">
-                      <p class="text-muted">Settings form goes here...</p>
+                      <form
+                        @submit.prevent="updateProfile"
+                        class="form-horizontal"
+                      >
+                        <div class="form-group row">
+                          <label class="col-sm-2 col-form-label">Name</label>
+                          <div class="col-sm-10">
+                            <input
+                              type="text"
+                              v-model="form.name"
+                              class="form-control"
+                              placeholder="Name"
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-sm-2 col-form-label">Email</label>
+                          <div class="col-sm-10">
+                            <input
+                              type="email"
+                              v-model="form.email"
+                              class="form-control"
+                              placeholder="Email"
+                            />
+                          </div>
+                        </div>
+                        <!-- Upload Profile Picture Field -->
+                        <div class="form-group row">
+                          <label class="col-sm-2 col-form-label"
+                            >Profile Image</label
+                          >
+                          <div class="col-sm-10">
+                            <input
+                              type="file"
+                              @change="handleImageChange"
+                              class="form-control-file"
+                              accept="image/*"
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <div class="offset-sm-2 col-sm-10">
+                            <button type="submit" class="btn btn-danger">
+                              Update Profile
+                            </button>
+                          </div>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -238,11 +265,39 @@
 </template>
 
 <script setup>
+import { reactive } from "vue";
 import { useUserStore } from "@/stores/user";
 import emptyImage from "@/assets/images/emptyImage.png";
 import Navbar from "@/components/includes/Navbar.vue";
 import LeftSidebar from "@/components/includes/LeftSidebar.vue";
 import Footer from "@/components/includes/Footer.vue";
+import { MessageModal } from "@/functions/swal";
 
 const userStore = useUserStore();
+
+const form = reactive({
+  name: userStore.name || "",
+  email: userStore.email || "",
+  avatar: null,
+});
+
+const handleImageChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    // បង្កើត Object URL ដើម្បី Preview រូបភាពភ្លាមៗពេលជ្រើសរើស
+    form.avatar = URL.createObjectURL(file);
+  }
+};
+
+const updateProfile = () => {
+  userStore.name = form.name;
+  if (form.avatar) {
+    userStore.avatar = form.avatar;
+  }
+  MessageModal({
+    icon: "success",
+    title: "Success",
+    text: "Profile updated successfully!",
+  });
+};
 </script>

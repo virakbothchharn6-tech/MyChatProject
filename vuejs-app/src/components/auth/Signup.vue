@@ -56,7 +56,7 @@
                 v-model="user.password"
                 class="form-control"
                 placeholder="Password"
-                autocomplete
+                autocomplete="new-password"
                 :class="{ 'is-invalid': !!userError.password }"
               />
               <div class="input-group-append">
@@ -74,7 +74,7 @@
                 v-model="user.password_confirmation"
                 class="form-control"
                 placeholder="Confirm Password"
-                autocomplete
+                autocomplete="new-password"
               />
               <div class="input-group-append">
                 <div class="input-group-text">
@@ -82,8 +82,17 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-8"></div>
+            <div class="row mb-3">
+              <div class="col-8">
+                <div class="icheck-primary">
+                  <input
+                    type="checkbox"
+                    id="remember"
+                    v-model="user.remember"
+                  />
+                  <label for="remember"> Remember Me </label>
+                </div>
+              </div>
               <div class="col-4">
                 <button type="submit" class="btn btn-primary btn-block">
                   Sign up
@@ -91,21 +100,29 @@
               </div>
             </div>
           </form>
+
           <div class="social-auth-links text-center mt-3 mb-3">
             <p>- OR -</p>
-            <button @click="googleSignUp()" class="btn btn-block btn-danger">
-              <i class="fab fa-google mr-2"></i> Sign up with Google
-            </button>
-            <button @click="tiktokSignUp()" class="btn btn-block btn-dark mt-2">
-              <i class="fab fa-tiktok mr-2"></i> Sign up with TikTok
+            <button
+              @click="facebookSignUp()"
+              class="btn btn-block btn-primary mb-2"
+            >
+              <i class="fab fa-facebook mr-2"></i> Sign up with Facebook
             </button>
             <button
-              @click="phoneSignUp()"
-              class="btn btn-block btn-primary mt-2"
+              @click="googleSignUp()"
+              class="btn btn-block btn-danger mb-2"
             >
+              <i class="fab fa-google mr-2"></i> Sign up with Google
+            </button>
+            <button @click="tiktokSignUp()" class="btn btn-block btn-dark mb-2">
+              <i class="fab fa-tiktok mr-2"></i> Sign up with TikTok
+            </button>
+            <button @click="phoneSignUp()" class="btn btn-block btn-secondary">
               <i class="fas fa-phone mr-2"></i> Sign up with Phone Number
             </button>
           </div>
+
           <p class="mb-1">
             <router-link :to="{ name: 'auth.signin' }" class="text-center"
               >I already have an account</router-link
@@ -143,6 +160,7 @@ const user = reactive({
   email: "",
   password: "",
   password_confirmation: "",
+  remember: false,
 });
 
 const userError = reactive({
@@ -218,6 +236,10 @@ async function sendVerificationEmail() {
 function resetSignedUpEmail() {
   signedUpEmail.value = "";
 }
+
+const facebookSignUp = async () => {
+  console.log("Facebook sign up clicked");
+};
 
 const googleSignUp = async () => {
   try {

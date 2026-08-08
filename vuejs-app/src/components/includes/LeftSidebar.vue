@@ -20,9 +20,9 @@
           />
         </div>
         <div class="info">
-          <router-link :to="{ name: 'profile' }" class="d-block">{{
-            userStore.name
-          }}</router-link>
+          <router-link :to="{ name: 'profile' }" class="d-block">
+            Alexander Pierce
+          </router-link>
         </div>
       </div>
 
@@ -41,41 +41,6 @@
             </button>
           </div>
         </div>
-        <div class="sidebar-search-results">
-          <div class="list-group">
-            <a href="#" class="list-group-item">
-              <div class="search-title">
-                <strong class="text-light"></strong>N<strong
-                  class="text-light"
-                ></strong
-                >o<strong class="text-light"></strong>
-                <strong class="text-light"></strong>e<strong
-                  class="text-light"
-                ></strong
-                >l<strong class="text-light"></strong>e<strong
-                  class="text-light"
-                ></strong
-                >m<strong class="text-light"></strong>e<strong
-                  class="text-light"
-                ></strong
-                >n<strong class="text-light"></strong>t<strong
-                  class="text-light"
-                ></strong>
-                <strong class="text-light"></strong>f<strong
-                  class="text-light"
-                ></strong
-                >o<strong class="text-light"></strong>u<strong
-                  class="text-light"
-                ></strong
-                >n<strong class="text-light"></strong>d<strong
-                  class="text-light"
-                ></strong
-                >!<strong class="text-light"></strong>
-              </div>
-              <div class="search-path"></div>
-            </a>
-          </div>
-        </div>
       </div>
 
       <nav class="mt-2">
@@ -85,26 +50,62 @@
           role="menu"
           data-accordion="false"
         >
-          <li class="nav-item">
-            <router-link
-              :to="{ name: 'dashboard' }"
-              active-class="active"
-              class="nav-link"
-            >
+          <!-- Starter Pages Dropdown -->
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>Dashboard</p>
+              <p>
+                Starter Pages
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link
+                  :to="{ name: 'dashboard' }"
+                  class="nav-link active"
+                >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Active Page</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Inactive Page</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- Other Links with New badge -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Simple Link
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <router-link :to="{ name: 'dashboard' }" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Dashboard
+                <span class="right badge badge-danger">New</span>
+              </p>
             </router-link>
           </li>
 
-          <!-- បន្ថែមเมนู Profile ត្រង់នេះ -->
           <li class="nav-item">
-            <router-link
-              :to="{ name: 'profile' }"
-              active-class="active"
-              class="nav-link"
-            >
+            <router-link :to="{ name: 'profile' }" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
-              <p>Profile</p>
+              <p>
+                Profile
+                <span class="right badge badge-danger">New</span>
+              </p>
             </router-link>
           </li>
         </ul>

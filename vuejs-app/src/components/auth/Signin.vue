@@ -39,7 +39,7 @@
                 v-model="user.password"
                 class="form-control"
                 placeholder="Password"
-                autocomplete
+                autocomplete="current-password"
                 :class="{ 'is-invalid': !!userError.password }"
               />
               <div class="input-group-append">
@@ -51,8 +51,17 @@
                 {{ userError.password }}
               </div>
             </div>
-            <div class="row">
-              <div class="col-8"></div>
+            <div class="row mb-3">
+              <div class="col-8">
+                <div class="icheck-primary">
+                  <input
+                    type="checkbox"
+                    id="remember"
+                    v-model="user.remember"
+                  />
+                  <label for="remember"> Remember Me </label>
+                </div>
+              </div>
               <div class="col-4">
                 <button type="submit" class="btn btn-primary btn-block">
                   Sign In
@@ -60,31 +69,38 @@
               </div>
             </div>
           </form>
-          <div class="social-auth-links text-center mt-3 mb-3">
-            <p>- OR -</p>
-            <button @click="googleSignIn()" class="btn btn-block btn-danger">
-              <i class="fab fa-google mr-2"></i> Sign in with Google
-            </button>
-            <button @click="tiktokSignIn()" class="btn btn-block btn-dark mt-2">
-              <i class="fab fa-tiktok mr-2"></i> Sign in with TikTok
+
+          <div class="social-auth-links text-center mt-2 mb-3">
+            <button
+              @click="facebookSignIn()"
+              class="btn btn-block btn-primary mb-2"
+            >
+              <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
             </button>
             <button
-              @click="phoneSignIn()"
-              class="btn btn-block btn-primary mt-2"
+              @click="googleSignIn()"
+              class="btn btn-block btn-danger mb-2"
             >
+              <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+            </button>
+            <button @click="tiktokSignIn()" class="btn btn-block btn-dark mb-2">
+              <i class="fab fa-tiktok mr-2"></i> Sign in with TikTok
+            </button>
+            <button @click="phoneSignIn()" class="btn btn-block btn-secondary">
               <i class="fas fa-phone mr-2"></i> Sign in with Phone Number
             </button>
           </div>
+
           <p class="mb-1">
-            <router-link :to="{ name: 'auth.signup' }" class="text-center"
-              >Register a new membership</router-link
-            >
-          </p>
-          <p class="mb-0">
             <router-link
               :to="{ name: 'auth.reset-password' }"
               class="text-center"
               >Forgot your password?</router-link
+            >
+          </p>
+          <p class="mb-0">
+            <router-link :to="{ name: 'auth.signup' }" class="text-center"
+              >Register a new membership</router-link
             >
           </p>
         </div>
@@ -109,6 +125,7 @@ const bgVideoSrc = "/big-video.mp4";
 const user = reactive({
   email: "",
   password: "",
+  remember: false,
 });
 
 const userError = reactive({
@@ -154,6 +171,10 @@ async function signIn() {
   }
 }
 
+const facebookSignIn = async () => {
+  console.log("Facebook sign in clicked");
+};
+
 const googleSignIn = async () => {
   try {
     LoadingModal();
@@ -169,12 +190,10 @@ const googleSignIn = async () => {
 };
 
 const tiktokSignIn = async () => {
-  //
   console.log("TikTok sign in clicked");
 };
 
 const phoneSignIn = async () => {
-  //
   console.log("Phone sign in clicked");
 };
 </script>
